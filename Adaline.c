@@ -41,7 +41,7 @@ void weight_update(int input){
 }
 void liquid_calculator(int input1){
 
-    yliquid = (bidimensional[input1][0] * wanterior[0]) + (bidimensional[input1][1] * wanterior[1]);
+    yliquid = banterior + (bidimensional[input1][0] * wanterior[0]) + (bidimensional[input1][1] * wanterior[1]);
     erro = erro + ((tabelaverdade[input1] - yliquid)*(tabelaverdade[input1] - yliquid));
 }
 
