@@ -12,7 +12,7 @@ int limiar = 0;
 int result;
 bool counter = true;
 float y = 0;
-float x[4][2];
+
 
 void pair_manipulation(int input);
 void iteracao ();
