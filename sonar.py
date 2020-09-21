@@ -8,19 +8,21 @@ from random import uniform
 import math
 
 #initial values
-alfa = 0.05 # taxa de aprendizagem
-numero_ciclos = 10000 # numero de ciclos previstos
+alfa = 0.01 # taxa de aprendizagem
+numero_ciclos = 4500 # numero de ciclos previstos
 ciclos_executados = 0 # numero de ciclos executados 
-camada_escondida = 10 # numero de neuronios da camada escondida
+camada_escondida = 20 # numero de neuronios da camada escondida
 entrada = 60 # numero de dados de entrada
 saida = 1 # numero de neuronios de saida
-training = open("trainingset .txt", "r")
+training = open("trainingset", "r")
 
-
+testingset = open("testingset","r")
 #initial variables
 entrada_valores = []
 saida_valores = []
 tabela_entrada = []
+teste_entrada = []
+teste_saida = []
 tabela_verdade = 0
 weights_hidden_layer = []
 weights_final_layer = []
@@ -63,6 +65,7 @@ def initial_weight_gen():
     result = uniform(-0.5, 0.5)
     return result
 
+
 def read_input_values():
     for line in training:
         floats =[]
@@ -81,12 +84,12 @@ def read_input_values():
             saida_valores.append(-1.0)
 
 def func_activ(x):
-    result = 1 / (1 + math.exp( - x ))
+    result = (2/(1+math.exp(-x)))-1
     return result
 
 def func_deriv(x):
     x = func_activ(x)
-    result = x * (1 - x)
+    result = 0.5*(1+x)*(1-x)
     return result
 
 def init_weights():
@@ -196,7 +199,50 @@ def weight_update():
             weights_hidden_layer[i][j] = weights_hidden_layer[i][j] + delta_h[i][j]
     return  bias_final_layer , weights_final_layer , bias_hidden_layer , weights_hidden_layer
 
+def read_training():
+    for line in testingset:
+        floats =[]
+        res =[]
+        line1= line[:(len(line)-3)]
+        numbers=line1.split(",")
+        if (len(numbers)>1):
+            for number in numbers:
+                floats.append(float(number))
+            if(len(floats)!=0):
+                teste_entrada.append(floats)
+        line2= line[len(line)-2:len(line)-1]
+        if(line2=='M'):
+            teste_saida.append(1.0)
+        elif(line2 =='R'):
+            teste_saida.append(-1.0)
+
+
+
+
 
 init_weights()
 read_input_values()
 training_master()
+read_training()
+acertos=0
+for u in range(len(teste_entrada)):
+    for x in range (camada_escondida):
+        sum_i = bias_hidden_layer[x]
+        for i in range (entrada):
+            sum_i = sum_i +  weights_hidden_layer[x][i] * teste_entrada[u][i]
+        z_ink_deriv[x] = func_deriv(sum_i)
+        z_final[x] = func_activ(sum_i)
+    for k in range (saida):
+        sum_k = bias_final_layer[k]
+        for i in range (camada_escondida):
+            sum_k = sum_k + weights_final_layer[k][i] * z_final[i]
+        y_ink_deriv = func_deriv(sum_k)
+        y_final = func_activ(sum_k)
+    print("Target: " + str(saida_valores[u]) +"   Rede Treinada: " + str(y_final))
+    if ((saida_valores[u]-y_final)<0.1):
+        print("[PASSED]")
+        acertos=acertos+1
+    else:
+        print("[FAIL]")
+
+print("\n\nTAXA DE ACERTO: " + str(acertos) +"/"+ str(len(teste_entrada)))
