@@ -84,6 +84,7 @@ def k_means():
     while(bool_operator == 0):
         calculo_cluster()
         centroide_nova()
+        error_calc()
         count = count + 1
         if((stop_cond == int(centroides)) or (count == counter_master)):
             bool_operator = 1
