@@ -65,7 +65,7 @@ def plot_points():
     x = []
     y = []
     z = []
-    color = ['red', 'green' , 'blue', 'orange' , 'black' , 'yellow']
+    color = ['red', 'green' , 'blue', 'orange' , 'black' , 'yellow' , 'purple' , 'pink']
     for i in range(len(pontos)):
         x.append(float(pontos[i][0]))
         y.append(float(pontos[i][1]))
@@ -94,3 +94,4 @@ def k_means():
     
 k_means()
 plot_points()
+
