@@ -17,6 +17,7 @@ counter_master = 1000
 stop_cond = 0
 x_data = []
 y_data = []
+error = []
 
 
 def fill_points_array():   
@@ -88,10 +89,23 @@ def k_means():
             bool_operator = 1
         stop_cond = 0
 
-
+def plot_error():
+    y = []
+    for i in range(len(error)):
+        y.append(i)
+    plt.scatter(error,y)
+    plt.show()
+    
+def error_calc():
+    erro = 0
+    for i in range(len(pontos)):
+        x = math.sqrt(((float(pontos[i][0]) - float(centroides_lista[int(cluster_reference[i]) - 1][0])) ** 2) + ((float(pontos[i][1]) - float(centroides_lista[int(cluster_reference[i]) - 1][1])) ** 2))
+        erro = erro + (x ** 2)
+    error.append(erro)
         
         
     
 k_means()
 plot_points()
+plot_error()
 
