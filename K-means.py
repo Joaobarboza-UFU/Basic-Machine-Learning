@@ -89,7 +89,7 @@ def k_means():
         if((stop_cond == int(centroides)) or (count == counter_master)):
             bool_operator = 1
         stop_cond = 0
-     print('Foram necessárias ' + str(count) + ' iterações')
+    print('Foram necessárias ' + str(count) + ' iterações')
 
 def plot_error():
     y = []
