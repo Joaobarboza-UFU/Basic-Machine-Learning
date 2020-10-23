@@ -12,3 +12,10 @@ was developed to show the failure of the hebb rule when it tries to learn the bi
 
 Implementation of the adaline neuron to learn the bipolar expression [-1, -1, 1, 1]
 
+# Sonar.py
+
+Multi layer neural network build to learn how to identify signal from a sonar file ( identify what the sonay is seeing ).
+
+# K-means.py and K-means++.py
+
+Implementation of the two classic clustering algortithms , with it plot results over a txt dataset. 
